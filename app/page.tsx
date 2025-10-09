@@ -1,8 +1,6 @@
-"use server";
-
 import { auth } from "@/lib/auth";
-import { LogInButton } from "./components/login-btn";
-import { LogOutButton } from "./components/logout-btn";
+import { LogInButton } from "../components/login-btn";
+import { LogOutButton } from "../components/logout-btn";
 import Image from "next/image";
 
 export default async function Home() {
