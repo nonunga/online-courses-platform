@@ -37,7 +37,7 @@ export function LoginForm({
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/oauth?next=/protected`,
+          redirectTo: `${window.location.origin}/auth/oauth?next=/auth/complete-profile`,
         },
       });
 
@@ -67,8 +67,12 @@ export function LoginForm({
       if (error) throw error;
 
       if (session) {
-        // Redirigir a la página protegida después de verificación exitosa
-        router.push("/protected");
+        if (session?.user.user_metadata?.full_name) {
+          // Redirect if successful verification
+          router.push("/");
+        } else {
+          router.push("/auth/complete-profile");
+        }
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
